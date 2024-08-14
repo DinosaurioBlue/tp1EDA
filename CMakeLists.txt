@@ -1,4 +1,5 @@
 ﻿cmake_minimum_required(VERSION 3.15.0)
+include_directories(/home/dante/dev/vcpkg/buildtrees/raylib/x64-linux-rel/raylib/include)
 
 project("orbitalsim")
 
@@ -16,17 +17,17 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     add_link_options(-fsanitize=undefined)
 endif()
 
-add_executable(orbitalsim main.cpp orbitalSim.cpp view.cpp)
+add_executable(orbitalsim main.cpp OrbitalSim.cpp View.cpp)
 
 # Raylib
 find_package(raylib CONFIG REQUIRED)
 
 target_include_directories(orbitalsim PRIVATE ${raylib_INCLUDE_DIRS})
-target_link_libraries(orbitalsim PRIVATE ${raylib_LIBRARIES})
+target_link_libraries(orbitalsim PRIVATE raylib)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+#if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # From "Working with CMake" documentation:
-    target_link_libraries(orbitalsim PRIVATE "-framework IOKit" "-framework Cocoa" "-framework OpenGL")
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    target_link_libraries(orbitalsim PRIVATE m ${CMAKE_DL_LIBS} pthread GL rt X11)
-endif()
+ #   target_link_libraries(orbitalsim PRIVATE "-framework IOKit" "-framework Cocoa" "-framework OpenGL")
+#elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+ #   target_link_libraries(orbitalsim PRIVATE m ${CMAKE_DL_LIBS} pthread GL rt X11)
+#endif()
