@@ -8,13 +8,23 @@
 #ifndef ORBITALSIM_H
 #define ORBITALSIM_H
 
+#include <stdint.h>
+#include <raylib.h>
+#include <raymath.h>
+
+
 /**
  * @brief Orbital body definition
  */
 struct OrbitalBody
 {
-    // Fill in your code here...
-
+    
+    char* nombre;
+    float masa;
+    float radio; 
+    Color color;
+    Vector3 posicion;
+    Vector3 velocidad;
 
 };
 
@@ -23,9 +33,11 @@ struct OrbitalBody
  */
 struct OrbitalSim
 {
-    // Fill in your code here...
-
-
+    /*
+    float timeStep;
+    uint8_t cantidadCuerpos;
+    OrbitalBody** cuerposCel; 
+*/
 };
 
 OrbitalSim *constructOrbitalSim(float timeStep);

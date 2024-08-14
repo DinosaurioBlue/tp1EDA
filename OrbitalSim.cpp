@@ -17,6 +17,8 @@
 #define GRAVITATIONAL_CONSTANT 6.6743E-11F
 #define ASTEROIDS_MEAN_RADIUS 4E11F
 
+#define SOLARSYSTEM_BODYNUM 9
+
 /**
  * @brief Gets a uniform random value in a range
  *
@@ -68,11 +70,7 @@ void configureAsteroid(OrbitalBody *body, float centerMass)
  */
 OrbitalSim *constructOrbitalSim(float timeStep)
 {
-    // Your code goes here...
-
-
-
-    return NULL; // This should return your orbital sim
+    return NULL;
 }
 
 /**

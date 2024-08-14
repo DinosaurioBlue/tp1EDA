@@ -8,6 +8,8 @@
 #include <time.h>
 
 #include "View.h"
+#include "raymath.h"
+#include "raylib.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -95,7 +97,7 @@ void renderView(View *view, OrbitalSim *sim)
     BeginMode3D(view->camera);
 
     // Fill in your 3D drawing code here:
-
+        DrawSphere((Vector3){0,0,0}, 0.005*logf(695700E3F), GOLD);
 
 
     DrawGrid(10, 10.0f);
