@@ -16,7 +16,7 @@ void avanzaTiempo(OrbitalSim* sim) {
 
 
             Vector3 aceleracionCentral = Vector3Scale(Vector3Subtract(((sim->cuerposCel) + j)->posicion, ((sim->cuerposCel) + i)->posicion), G * ((sim->cuerposCel) + i)->masa /
-                    (Vector3Length(((sim->cuerposCel) + j)->posicion - ((sim->cuerposCel) + i)->posicion)));//ACELERACION DEL CUERPO ""CENTRAL""
+                (Vector3Length(((sim->cuerposCel) + j)->posicion - ((sim->cuerposCel) + i)->posicion)));//ACELERACION DEL CUERPO ""CENTRAL""
 
 
             ((sim->cuerposCel) + j)->velocidad = Vector3Add((sim->cuerposCel) + j)->velocidad, Vector3Scale(aceleracionNoCentral, sim->timeStep);
