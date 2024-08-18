@@ -97,8 +97,16 @@ void renderView(View *view, OrbitalSim *sim)
     BeginMode3D(view->camera);
 
     // Fill in your 3D drawing code here:
-        DrawSphere((Vector3){0,0,0}, 0.005*logf(695700E3F), GOLD);
-
+        //DrawSphere((Vector3){0,0,0}, 0.005*logf(695700E3F), GOLD);
+        int i;
+        for(i=0; i<sim->cantidadCuerpos; i++){
+            // comentado porque aun no pusimos lo de anillos para saturno
+            /*if(sim->cuerposCel[i]->anillos == 1){
+                DrawSphereEx(((*(sim->cuerposCel))+i)->posicion, ((*(sim->cuerposCel))+i)->radio, sim->cuerposCel[i]->anillos, 1, ((*(sim->cuerposCel))+i)->color);
+            }else{*/
+                DrawSphere(Vector3Scale(((*(sim->cuerposCel))+i)->posicion, 1E-11), 0.005*logf(((*(sim->cuerposCel))+i)->radio), ((*(sim->cuerposCel))+i)->color);
+            //}
+        }
 
     DrawGrid(10, 10.0f);
     EndMode3D();

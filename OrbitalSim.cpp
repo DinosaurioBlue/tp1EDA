@@ -13,6 +13,7 @@
 
 #include "OrbitalSim.h"
 #include "ephemerides.h"
+#include "calculos.h"
 
 #define GRAVITATIONAL_CONSTANT 6.6743E-11F
 #define ASTEROIDS_MEAN_RADIUS 4E11F
@@ -71,7 +72,6 @@ OrbitalSim *constructOrbitalSim(float timeStep)
     //defino cantidad de planetas
     int n = SOLARSYSTEM_BODYNUM;
 
-
     //creo un arreglo sistema solar con memoria dinamica
    static OrbitalBody *  SistemaSolar= (OrbitalBody*)malloc(sizeof(OrbitalBody)*n);
     //inicializo cada orbitalBody
@@ -113,7 +113,7 @@ void destroyOrbitalSim(OrbitalSim *sim)
  */
 void updateOrbitalSim(OrbitalSim *sim)
 {
-    // Your code goes here...
-
+    // llamo a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
+    avanzaTiempo(sim);
 
 }
