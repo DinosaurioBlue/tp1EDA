@@ -70,7 +70,31 @@ void configureAsteroid(OrbitalBody *body, float centerMass)
  */
 OrbitalSim *constructOrbitalSim(float timeStep)
 {
-    return NULL;
+    /defino cantidad de planetas
+    int n = SOLARSYSTEM_BODYNUM;
+
+
+    //creo un arreglo sistema solar con memoria dinamica
+   static OrbitalBody *  SistemaSolar= (OrbitalBody*)malloc(sizeof(OrbitalBody)*n);
+    //inicializo cada orbitalBody
+    int i;
+    for (i=0;i<n;++i){
+        (SistemaSolar[i]).nombre=(solarSystem[i]).name;
+        (SistemaSolar[i]).masa=(solarSystem[i]).mass;
+        (SistemaSolar[i]).radio=(solarSystem[i]).radius;
+        (SistemaSolar[i]).color=(solarSystem[i]).color;
+        (SistemaSolar[i]).posicion=(solarSystem[i]).position;
+        (SistemaSolar[i]).velocidad=(solarSystem[i]).velocity;
+    }
+    //creo un puntero a la estructura de orbital body.(futuro campo de orbital sim)
+    OrbitalBody** p2SistemaSolar = &SistemaSolar;
+    //creo e inicializo mi simulacion
+    static OrbitalSim sim ={timeStep,(uint8_t)n,p2SistemaSolar};
+
+    //creo e inicializo un puntero a la simulacion y devuelvo el puntero
+    static OrbitalSim * p2sim = &sim;
+    return(p2sim);
+
 }
 
 /**
@@ -78,8 +102,9 @@ OrbitalSim *constructOrbitalSim(float timeStep)
  */
 void destroyOrbitalSim(OrbitalSim *sim)
 {
-    // Your code goes here...
-
+    
+      //la intencion de esta funcion es liberar memoria del heap en la que se almacena el arreglo de orbBodies
+    free(*(sim->cuerposCel));//lo que hago es desreferenciar el campo de sim que apunta al arreglo de orbBodies
 
 }
 
