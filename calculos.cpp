@@ -23,10 +23,20 @@ void avanzaTiempo(OrbitalSim* sim, int64_t tiempo) {
 
             ((sim->cuerposCel) + i)->velocidad = Vector3Add((sim->cuerposCel) + i)->velocidad, Vector3Scale(aceleracionCentral, sim->timeStep);
 
+           
+            
 
         }
 
     }
+
+    
+    for(i=0;i<sim->cantidadCuerpos;i++)
+    {
+         ((sim->cuerposCel) + i)->posicion = Vector3Add(((sim->cuerposCel) + i)->posicion, Vector3Scale(((sim->cuerposCel) + i)->velocidad,sim->timeStep ));
+    }
+
+
     return;
 
 }
