@@ -19,7 +19,7 @@
 struct OrbitalBody
 {
     
-    char* nombre;
+    const char* nombre;
     float masa;
     float radio; 
     Color color;
@@ -33,11 +33,11 @@ struct OrbitalBody
  */
 struct OrbitalSim
 {
-    /*
+    
     float timeStep;
     uint8_t cantidadCuerpos;
     OrbitalBody** cuerposCel; 
-*/
+
 };
 
 OrbitalSim *constructOrbitalSim(float timeStep);
