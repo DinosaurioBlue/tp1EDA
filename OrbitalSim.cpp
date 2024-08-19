@@ -66,6 +66,7 @@ void configureAsteroid(OrbitalBody *body, float centerMass){
  * @return The orbital simulation
  */
 OrbitalSim *constructOrbitalSim(float timeStep){
+
     // Definimos cantidad de cuerpos celestes
     int n = SOLARSYSTEM_BODYNUM;
     int i;
@@ -87,7 +88,7 @@ OrbitalSim *constructOrbitalSim(float timeStep){
         (SistemaSolar[i])->velocidad=(solarSystem[i]).velocity;
     }
 
-    static OrbitalSim sim = {timeStep,(uint8_t)n, SistemaSolar};
+    static OrbitalSim sim = {timeStep,(uint8_t)n, SistemaSolar, 0};
     static OrbitalSim * p2sim = &sim;
     
     return(p2sim);
@@ -115,7 +116,11 @@ void destroyOrbitalSim(OrbitalSim *sim){
  * @param sim The orbital simulation
  */
 void updateOrbitalSim(OrbitalSim *sim){
-    // llamo a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
+    
+    // Llamamos a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
     avanzaTiempo(sim);
+
+    // Avanzamos el contador de segundos de la simulacion
+    sim->timeSince += sim->timeStep;
 
 }

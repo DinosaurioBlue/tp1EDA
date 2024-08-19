@@ -16,7 +16,10 @@ void avanzaTiempo(OrbitalSim* sim) {
             }
             
             norma = (long double)(Vector3Length(Vector3Subtract(sim->cuerposCel[i]->posicion, sim->cuerposCel[j]->posicion)));
-            vUnitario = Vector3Scale(Vector3Subtract(sim->cuerposCel[i]->posicion, sim->cuerposCel[j]->posicion), 1/norma);
+            
+            if (norma!=0){
+                vUnitario = Vector3Scale(Vector3Subtract(sim->cuerposCel[i]->posicion, sim->cuerposCel[j]->posicion), 1/norma);
+            }
 
             ai = Vector3Add(ai, Vector3Scale(vUnitario, (-1) * G * sim->cuerposCel[j]->masa * (1/(norma*norma))));
 

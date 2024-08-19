@@ -37,6 +37,7 @@ struct OrbitalSim
     float timeStep;
     uint8_t cantidadCuerpos;
     OrbitalBody** cuerposCel; 
+    float timeSince;                    //segundos desde el 2022
 
 };
 

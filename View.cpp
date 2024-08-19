@@ -14,6 +14,8 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
+#define SATURNO 6
+
 /**
  * @brief Converts a timestamp (number of seconds since 1/1/2022)
  *        to an ISO date ("YYYY-MM-DD")
@@ -22,7 +24,7 @@
  * @return The ISO date (a raylib string)
  */
 const char *getISODate(float timestamp){
-    
+
     // Timestamp epoch: 1/1/2022
     struct tm unichEpochTM = {0, 0, 0, 1, 0, 122};
 
@@ -87,6 +89,7 @@ bool isViewRendering(View *view){
  * @param sim The orbital sim
  */
 void renderView(View *view, OrbitalSim *sim){
+
     UpdateCamera(&view->camera, CAMERA_FREE);
 
     BeginDrawing();
@@ -94,24 +97,25 @@ void renderView(View *view, OrbitalSim *sim){
     ClearBackground(BLACK);
     BeginMode3D(view->camera);
 
-    // Fill in your 3D drawing code here:
-        //DrawSphere((Vector3){0,0,0}, 0.005*logf(695700E3F), GOLD);
+    {
         int i;
         for(i=0; i<sim->cantidadCuerpos; i++){
-            // comentado porque aun no pusimos lo de anillos para saturno
-            /*if(sim->cuerposCel[i]->anillos == 1){
-                DrawSphereEx(((*(sim->cuerposCel))+i)->posicion, ((*(sim->cuerposCel))+i)->radio, sim->cuerposCel[i]->anillos, 1, ((*(sim->cuerposCel))+i)->color);
-            }else{*/
+            
+            if(i == SATURNO){
+                DrawSphereEx(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), 1, 1,sim->cuerposCel[i]->color);
+            }else{
                 DrawSphere(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), sim->cuerposCel[i]->color);
-            //}
+            }
         }
+        
+    }
 
     DrawGrid(10, 10.0f);
     EndMode3D();
-
-    // Fill in your 2D drawing code here:
-
-
-
+    
+    {
+        DrawText(getISODate(sim->timeSince), 10, 10, 30, WHITE);
+    }
+    
     EndDrawing();
 }
