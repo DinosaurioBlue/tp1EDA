@@ -20,23 +20,14 @@ void avanzaTiempo(OrbitalSim* sim) {
 
             ai = Vector3Add(ai, Vector3Scale(vUnitario, (-1) * G * sim->cuerposCel[j]->masa * (1/(norma*norma))));
 
-            /*  LICHA                                                    
-            Vector3 aceleracionNoCentral = Vector3Scale(Vector3Subtract(sim->cuerposCel[i]->posicion, (sim->cuerposCel[j]->posicion), G * sim->cuerposCel[j]->masa /
-                (Vector3Length(Vector3Subtract(((sim->cuerposCel) + j)->posicion, ((sim->cuerposCel) + i)->posicion))));//aceleracion del cuerpo ""no central""
-
-
-            Vector3 aceleracionCentral = Vector3Scale(Vector3Subtract(((sim->cuerposCel) + j)->posicion, ((sim->cuerposCel) + i)->posicion), G * ((sim->cuerposCel) + i)->masa /
-                (Vector3Length(((sim->cuerposCel) + j)->posicion - ((sim->cuerposCel) + i)->posicion)));//ACELERACION DEL CUERPO ""CENTRAL""
-            */
-
         }
-    
+
         sim->cuerposCel[i]->velocidad = Vector3Add(sim->cuerposCel[i]->velocidad, Vector3Scale(ai, sim->timeStep)); 
+
     }
 
     
-    for(i=0;i<sim->cantidadCuerpos;i++)
-    {
+    for(i=0;i<sim->cantidadCuerpos;i++){
         sim->cuerposCel[i]->posicion = Vector3Add(sim->cuerposCel[i]->posicion, Vector3Scale(sim->cuerposCel[i]->velocidad, sim->timeStep));
     }
 
