@@ -20,8 +20,8 @@ int main()
     OrbitalSim *sim = constructOrbitalSim(timeStep);
     View *view = constructView(fps);
     
-    while (isViewRendering(view))
-    {
+    while (isViewRendering(view)){
+        
         updateOrbitalSim(sim);
 
         renderView(view, sim);

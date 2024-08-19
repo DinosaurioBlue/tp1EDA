@@ -25,8 +25,7 @@
  * @param max Maximum value
  * @return The random value
  */
-float getRandomFloat(float min, float max)
-{
+float getRandomFloat(float min, float max){
     return min + (max - min) * rand() / (float)RAND_MAX;
 }
 
@@ -36,8 +35,7 @@ float getRandomFloat(float min, float max)
  * @param body An orbital body
  * @param centerMass The mass of the most massive object in the star system
  */
-void configureAsteroid(OrbitalBody *body, float centerMass)
-{
+void configureAsteroid(OrbitalBody *body, float centerMass){
     // Logit distribution
     float x = getRandomFloat(0, 1);
     float l = logf(x) - logf(1 - x) + 1;
@@ -67,8 +65,7 @@ void configureAsteroid(OrbitalBody *body, float centerMass)
  * @param float The time step
  * @return The orbital simulation
  */
-OrbitalSim *constructOrbitalSim(float timeStep)
-{
+OrbitalSim *constructOrbitalSim(float timeStep){
     // Definimos cantidad de cuerpos celestes
     int n = SOLARSYSTEM_BODYNUM;
     int i;
@@ -100,14 +97,15 @@ OrbitalSim *constructOrbitalSim(float timeStep)
 /**
  * @brief Destroys an orbital simulation
  */
-void destroyOrbitalSim(OrbitalSim *sim)
-{
-    // libero cada puntero
+void destroyOrbitalSim(OrbitalSim *sim){
+
+    // Libero cada puntero
     for(int i = 0; i<SOLARSYSTEM_BODYNUM; i++){
         free(sim->cuerposCel[i]);
     }
-    //la intencion de esta funcion es liberar memoria del heap en la que se almacena el arreglo de orbBodies
-    free(sim->cuerposCel);//lo que hago es desreferenciar el campo de sim que apunta al arreglo de orbBodies
+
+    // Libero el puntero al arreglo de punteros
+    free(sim->cuerposCel);
 
 }
 
@@ -116,8 +114,7 @@ void destroyOrbitalSim(OrbitalSim *sim)
  *
  * @param sim The orbital simulation
  */
-void updateOrbitalSim(OrbitalSim *sim)
-{
+void updateOrbitalSim(OrbitalSim *sim){
     // llamo a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
     avanzaTiempo(sim);
 
