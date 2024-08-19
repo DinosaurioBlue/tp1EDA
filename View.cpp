@@ -104,7 +104,7 @@ void renderView(View *view, OrbitalSim *sim)
             /*if(sim->cuerposCel[i]->anillos == 1){
                 DrawSphereEx(((*(sim->cuerposCel))+i)->posicion, ((*(sim->cuerposCel))+i)->radio, sim->cuerposCel[i]->anillos, 1, ((*(sim->cuerposCel))+i)->color);
             }else{*/
-                DrawSphere(Vector3Scale(((*(sim->cuerposCel))+i)->posicion, 1E-11), 0.005*logf(((*(sim->cuerposCel))+i)->radio), ((*(sim->cuerposCel))+i)->color);
+                DrawSphere(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), sim->cuerposCel[i]->color);
             //}
         }
 

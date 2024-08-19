@@ -71,23 +71,36 @@ OrbitalSim *constructOrbitalSim(float timeStep)
 {
     //defino cantidad de planetas
     int n = SOLARSYSTEM_BODYNUM;
+    int i;
 
     //creo un arreglo sistema solar con memoria dinamica
-   static OrbitalBody *  SistemaSolar= (OrbitalBody*)malloc(sizeof(OrbitalBody)*n);
-    //inicializo cada orbitalBody
-    int i;
-    for (i=0;i<n;++i){
-        (SistemaSolar[i]).nombre=(solarSystem[i]).name;
-        (SistemaSolar[i]).masa=(solarSystem[i]).mass;
-        (SistemaSolar[i]).radio=(solarSystem[i]).radius;
-        (SistemaSolar[i]).color=(solarSystem[i]).color;
-        (SistemaSolar[i]).posicion=(solarSystem[i]).position;
-        (SistemaSolar[i]).velocidad=(solarSystem[i]).velocity;
+    static OrbitalBody **  SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*n);
+
+    for(i = 0; i< n; i++){
+
+        SistemaSolar[i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
+
     }
+
+    //inicializo cada orbitalBody
+    for (i=0;i<n;++i){
+
+        (SistemaSolar[i])->nombre=(solarSystem[i]).name;
+        (SistemaSolar[i])->masa=(solarSystem[i]).mass;
+        (SistemaSolar[i])->radio=(solarSystem[i]).radius;
+        (SistemaSolar[i])->color=(solarSystem[i]).color;
+        (SistemaSolar[i])->posicion=(solarSystem[i]).position;
+        (SistemaSolar[i])->velocidad=(solarSystem[i]).velocity;
+
+    }
+    /* forma franco
     //creo un puntero a la estructura de orbital body.(futuro campo de orbital sim)
     OrbitalBody** p2SistemaSolar = &SistemaSolar;
     //creo e inicializo mi simulacion
     static OrbitalSim sim ={timeStep,(uint8_t)n,p2SistemaSolar};
+    */
+
+    static OrbitalSim sim = {timeStep,(uint8_t)n, SistemaSolar};
 
     //creo e inicializo un puntero a la simulacion y devuelvo el puntero
     static OrbitalSim * p2sim = &sim;
@@ -100,9 +113,12 @@ OrbitalSim *constructOrbitalSim(float timeStep)
  */
 void destroyOrbitalSim(OrbitalSim *sim)
 {
-    
-      //la intencion de esta funcion es liberar memoria del heap en la que se almacena el arreglo de orbBodies
-    free(*(sim->cuerposCel));//lo que hago es desreferenciar el campo de sim que apunta al arreglo de orbBodies
+    // libero cada puntero
+    for(int i = 0; i<SOLARSYSTEM_BODYNUM; i++){
+        free(sim->cuerposCel[i]);
+    }
+    //la intencion de esta funcion es liberar memoria del heap en la que se almacena el arreglo de orbBodies
+    free(sim->cuerposCel);//lo que hago es desreferenciar el campo de sim que apunta al arreglo de orbBodies
 
 }
 

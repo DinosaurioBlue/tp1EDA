@@ -7,6 +7,7 @@
 
 #include "OrbitalSim.h"
 #include "View.h"
+#include "calculos.h"
 
 #define SECONDS_PER_DAY 86400
 
@@ -18,13 +19,16 @@ int main()
 
     OrbitalSim *sim = constructOrbitalSim(timeStep);
     View *view = constructView(fps);
-
+    
     while (isViewRendering(view))
     {
         updateOrbitalSim(sim);
 
         renderView(view, sim);
     }
+    
+
+    avanzaTiempo(sim);
 
     destroyView(view);
     destroyOrbitalSim(sim);
