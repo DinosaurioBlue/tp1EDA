@@ -17,8 +17,12 @@
 
 #define GRAVITATIONAL_CONSTANT 6.6743E-11F
 #define ASTEROIDS_MEAN_RADIUS 4E11F
-#define CANTIDAD_ASTEROIDES_INICIALES 0
+
+#define CANTIDAD_ASTEROIDES 1000
 #define SEGUNDOS_INICIALES 0
+
+#define SISTEMA_SOLAR
+//#define ALPHA_CENTAURI
 
 /**
  * @brief Gets a uniform random value in a range
@@ -47,8 +51,9 @@ void configureAsteroid(OrbitalBody *body, float centerMass){
     float r = ASTEROIDS_MEAN_RADIUS * sqrtf(fabsf(l));
     float phi = getRandomFloat(0, 2.0F * (float)M_PI);
 
-    // Surprise!
+    // Surprise! : Easter Egg?
     // phi = 0;
+    
 
     // https://en.wikipedia.org/wiki/Circular_orbit#Velocity
     float v = sqrtf(GRAVITATIONAL_CONSTANT * centerMass / r) * getRandomFloat(0.6F, 1.2F);
@@ -71,18 +76,19 @@ void configureAsteroid(OrbitalBody *body, float centerMass){
 OrbitalSim *constructOrbitalSim(float timeStep){
 
     // Definimos cantidad de cuerpos celestes
-    int n = SOLARSYSTEM_BODYNUM;
     int i;
 
-    // Creamos arreglo de punteros a OrbitalBody en el Heap
-    static OrbitalBody **SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*n);
+    #ifdef SISTEMA_SOLAR
 
-    for(i = 0; i< n; i++){
+    // Creamos arreglo de punteros a OrbitalBody en el Heap
+    static OrbitalBody **SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*(SOLARSYSTEM_BODYNUM));
+
+    for(i = 0; i < SOLARSYSTEM_BODYNUM; i++){
         SistemaSolar[i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
     }
 
     // Inicializamos cada OrbitalBody usando los datos de ephemerides
-    for (i=0;i<n;++i){
+    for (i = 0; i < SOLARSYSTEM_BODYNUM; ++i){
         (SistemaSolar[i])->nombre=(solarSystem[i]).name;
         (SistemaSolar[i])->masa=(solarSystem[i]).mass;
         (SistemaSolar[i])->radio=(solarSystem[i]).radius;
@@ -91,10 +97,36 @@ OrbitalSim *constructOrbitalSim(float timeStep){
         (SistemaSolar[i])->velocidad=(solarSystem[i]).velocity;
     }
 
-    static OrbitalSim sim = {timeStep,(uint8_t)n, CANTIDAD_ASTEROIDES_INICIALES, SistemaSolar, SEGUNDOS_INICIALES};
+    static OrbitalSim sim = {timeStep,(uint8_t)(SOLARSYSTEM_BODYNUM), CANTIDAD_ASTEROIDES, SistemaSolar, SEGUNDOS_INICIALES};
+
+    #endif
+
+    #ifdef ALPHA_CENTAURI
+
+    static OrbitalBody **SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*(ALPHACENTAURISYSTEM_BODYNUM));
+
+    for(i = 0; i < ALPHACENTAURISYSTEM_BODYNUM; i++){
+        SistemaSolar[i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
+    }
+
+    for(i = 0; i < ALPHACENTAURISYSTEM_BODYNUM; i++){
+
+        SistemaSolar[i]->nombre = alphaCentauriSystem[i].name;
+        SistemaSolar[i]->masa = alphaCentauriSystem[i].mass;
+        SistemaSolar[i]->radio = alphaCentauriSystem[i].radius;
+        SistemaSolar[i]->color = alphaCentauriSystem[i].color;
+        SistemaSolar[i]->posicion = alphaCentauriSystem[i].position;
+        SistemaSolar[i]->velocidad = alphaCentauriSystem[i].velocity;
+
+    }
+
+    static OrbitalSim sim = {timeStep,(uint16_t)(ALPHACENTAURISYSTEM_BODYNUM), (uint16_t)CANTIDAD_ASTEROIDES, SistemaSolar, SEGUNDOS_INICIALES};
+
+    #endif
+
     static OrbitalSim * p2sim = &sim;
 
-    sumarAsteroides(p2sim, 20);
+    sumarAsteroides(p2sim, CANTIDAD_ASTEROIDES);
     
     return(p2sim);
 
@@ -106,7 +138,7 @@ OrbitalSim *constructOrbitalSim(float timeStep){
 void destroyOrbitalSim(OrbitalSim *sim){
 
     // Libero cada puntero
-    for(int i = 0; i<SOLARSYSTEM_BODYNUM; i++){
+    for(int i = 0; i < ((sim->cantidadAsteroides) + (sim->cantidadCuerpos)); i++){
         free(sim->cuerposCel[i]);
     }
 
@@ -123,7 +155,8 @@ void destroyOrbitalSim(OrbitalSim *sim){
 void updateOrbitalSim(OrbitalSim *sim){
     
     // Llamamos a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
-    avanzaTiempo(sim);
+    avanzaTiempoCuerpos(sim);
+    avanzaTiempoAsteroides(sim);
 
     // Avanzamos el contador de segundos de la simulacion
     sim->timeSince += sim->timeStep;
@@ -134,8 +167,6 @@ void sumarAsteroides(OrbitalSim *sim, int cantidadAsteroides){
     
     // Reasigno el lugar en el heap para la nueva cantidad de punteros a 
     // orbital bodys que hay.
-
-    sim->cantidadAsteroides = cantidadAsteroides;
 
     sim->cuerposCel = (OrbitalBody**)realloc(sim->cuerposCel, ((sim->cantidadCuerpos)+cantidadAsteroides)*sizeof(OrbitalBody*));
 

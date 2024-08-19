@@ -97,9 +97,11 @@ void renderView(View *view, OrbitalSim *sim){
     ClearBackground(BLACK);
     BeginMode3D(view->camera);
 
-    {
+    {   // Codigo 3D
+
         int i;
-        for(i=0; i<sim->cantidadCuerpos; i++){
+        for(i=0; i < sim->cantidadCuerpos; i++){
+
             // NO ANDA BIEN AUN LA DE RINGS
             if(i == SATURNO){
                 DrawSphereEx(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), 1, 1,sim->cuerposCel[i]->color);
@@ -109,20 +111,21 @@ void renderView(View *view, OrbitalSim *sim){
 
         }
 
-        for(i=0; i<sim->cantidadAsteroides; i++){
+        for(i=0; i < sim->cantidadAsteroides; i++){
             
-            DrawSphere(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[(sim->cantidadCuerpos)+i]->radio), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
+            DrawPoint3D(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
+            //DrawSphere(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[(sim->cantidadCuerpos)+i]->radio), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
 
         }
 
-        
     }
 
     DrawGrid(10, 10.0f);
     EndMode3D();
-    
-    {
+
+    {   // Codigo 2D
         DrawText(getISODate(sim->timeSince), 10, 10, 30, WHITE);
+        DrawFPS(10,700);
     }
     
     EndDrawing();

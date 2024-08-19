@@ -26,9 +26,6 @@ int main()
 
         renderView(view, sim);
     }
-    
-
-    avanzaTiempo(sim);
 
     destroyView(view);
     destroyOrbitalSim(sim);
