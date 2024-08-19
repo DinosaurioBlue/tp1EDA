@@ -1,6 +1,6 @@
 #include "calculos.h"
 
-void avanzaTiempo(OrbitalSim* sim) {
+void avanzaTiempoCuerpos(OrbitalSim* sim){
 
     int i, j;
     long double norma;
@@ -32,6 +32,12 @@ void avanzaTiempo(OrbitalSim* sim) {
     for(i=0;i<sim->cantidadCuerpos;i++){
         sim->cuerposCel[i]->posicion = Vector3Add(sim->cuerposCel[i]->posicion, Vector3Scale(sim->cuerposCel[i]->velocidad, sim->timeStep));
     }
+
+    return;
+}
+
+
+void avanzaTiempoAsteroides(OrbitalSim* sim){
 
     return;
 }

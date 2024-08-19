@@ -6,6 +6,8 @@
 
 #define G 0.0000000000667
 
-void avanzaTiempo(OrbitalSim* sim); 
+void avanzaTiempoCuerpos(OrbitalSim* sim); 
+
+void avanzaTiempoAsteroides(OrbitalSim* sim); 
 
 #endif

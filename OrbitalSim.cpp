@@ -17,6 +17,8 @@
 
 #define GRAVITATIONAL_CONSTANT 6.6743E-11F
 #define ASTEROIDS_MEAN_RADIUS 4E11F
+#define CANTIDAD_ASTEROIDES_INICIALES 0
+#define SEGUNDOS_INICIALES 0
 
 /**
  * @brief Gets a uniform random value in a range
@@ -73,7 +75,7 @@ OrbitalSim *constructOrbitalSim(float timeStep){
     int i;
 
     // Creamos arreglo de punteros a OrbitalBody en el Heap
-    static OrbitalBody **  SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*n);
+    static OrbitalBody **SistemaSolar = (OrbitalBody**)malloc(sizeof(OrbitalBody*)*n);
 
     for(i = 0; i< n; i++){
         SistemaSolar[i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
@@ -89,10 +91,10 @@ OrbitalSim *constructOrbitalSim(float timeStep){
         (SistemaSolar[i])->velocidad=(solarSystem[i]).velocity;
     }
 
-    static OrbitalSim sim = {timeStep,(uint8_t)n, SistemaSolar, 0};
+    static OrbitalSim sim = {timeStep,(uint8_t)n, CANTIDAD_ASTEROIDES_INICIALES, SistemaSolar, SEGUNDOS_INICIALES};
     static OrbitalSim * p2sim = &sim;
 
-    sumarAsteroides(p2sim, 5);
+    sumarAsteroides(p2sim, 20);
     
     return(p2sim);
 
@@ -133,14 +135,15 @@ void sumarAsteroides(OrbitalSim *sim, int cantidadAsteroides){
     // Reasigno el lugar en el heap para la nueva cantidad de punteros a 
     // orbital bodys que hay.
 
-    sim->cantidadCuerpos += cantidadAsteroides;
+    sim->cantidadAsteroides = cantidadAsteroides;
 
-    sim->cuerposCel = (OrbitalBody**)realloc(sim->cuerposCel, (sim->cantidadCuerpos)*sizeof(OrbitalBody*));
+    sim->cuerposCel = (OrbitalBody**)realloc(sim->cuerposCel, ((sim->cantidadCuerpos)+cantidadAsteroides)*sizeof(OrbitalBody*));
 
     int i;
     for(i = 0; i<cantidadAsteroides; i++){
         
-        sim->cuerposCel[(sim->cantidadCuerpos)-cantidadAsteroides+i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
+        sim->cuerposCel[(sim->cantidadCuerpos)+i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
+        configureAsteroid(sim->cuerposCel[(sim->cantidadCuerpos)+i], sim->cuerposCel[0]->masa);
 
     }
 
