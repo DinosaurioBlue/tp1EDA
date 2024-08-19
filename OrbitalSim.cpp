@@ -36,6 +36,7 @@ float getRandomFloat(float min, float max){
  * @param centerMass The mass of the most massive object in the star system
  */
 void configureAsteroid(OrbitalBody *body, float centerMass){
+    
     // Logit distribution
     float x = getRandomFloat(0, 1);
     float l = logf(x) - logf(1 - x) + 1;
@@ -52,11 +53,11 @@ void configureAsteroid(OrbitalBody *body, float centerMass){
     float vy = getRandomFloat(-1E2F, 1E2F);
 
     // Fill in with your own fields:
-    // body->mass = 1E12F;  // Typical asteroid weight: 1 billion tons
-    // body->radius = 2E3F; // Typical asteroid radius: 2km
-    // body->color = GRAY;
-    // body->position = {r * cosf(phi), 0, r * sinf(phi)};
-    // body->velocity = {-v * sinf(phi), vy, v * cosf(phi)};
+    body->masa = 1E12F;  // Typical asteroid weight: 1 billion tons
+    body->radio = 2E3F; // Typical asteroid radius: 2km
+    body->color = GRAY;
+    body->posicion = {r * cosf(phi), 0, r * sinf(phi)};
+    body->velocidad = {-v * sinf(phi), vy, v * cosf(phi)};
 }
 
 /**
@@ -90,6 +91,8 @@ OrbitalSim *constructOrbitalSim(float timeStep){
 
     static OrbitalSim sim = {timeStep,(uint8_t)n, SistemaSolar, 0};
     static OrbitalSim * p2sim = &sim;
+
+    sumarAsteroides(p2sim, 5);
     
     return(p2sim);
 
@@ -122,5 +125,23 @@ void updateOrbitalSim(OrbitalSim *sim){
 
     // Avanzamos el contador de segundos de la simulacion
     sim->timeSince += sim->timeStep;
+
+}
+
+void sumarAsteroides(OrbitalSim *sim, int cantidadAsteroides){
+    
+    // Reasigno el lugar en el heap para la nueva cantidad de punteros a 
+    // orbital bodys que hay.
+
+    sim->cantidadCuerpos += cantidadAsteroides;
+
+    sim->cuerposCel = (OrbitalBody**)realloc(sim->cuerposCel, (sim->cantidadCuerpos)*sizeof(OrbitalBody*));
+
+    int i;
+    for(i = 0; i<cantidadAsteroides; i++){
+        
+        sim->cuerposCel[(sim->cantidadCuerpos)-cantidadAsteroides+i] = (OrbitalBody*)malloc(sizeof(OrbitalBody));
+
+    }
 
 }

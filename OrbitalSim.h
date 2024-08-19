@@ -44,6 +44,8 @@ struct OrbitalSim
 OrbitalSim *constructOrbitalSim(float timeStep);
 void destroyOrbitalSim(OrbitalSim *sim);
 
+void sumarAsteroides(OrbitalSim *sim, int cantidadAsteroides);
+
 void updateOrbitalSim(OrbitalSim *sim);
 
 #endif
