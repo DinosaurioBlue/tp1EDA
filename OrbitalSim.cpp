@@ -21,8 +21,8 @@
 #define CANTIDAD_ASTEROIDES 1000
 #define SEGUNDOS_INICIALES 0
 
-#define SISTEMA_SOLAR
-//#define ALPHA_CENTAURI
+//#define SISTEMA_SOLAR
+#define ALPHA_CENTAURI
 
 /**
  * @brief Gets a uniform random value in a range
@@ -154,7 +154,7 @@ void destroyOrbitalSim(OrbitalSim *sim){
  */
 void updateOrbitalSim(OrbitalSim *sim){
     
-    // Llamamos a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes
+    // Llamamos a la funcion que modifica las velocidades y las posiciones de los cuerpos celestes y asteroides
     avanzaTiempoCuerpos(sim);
     avanzaTiempoAsteroides(sim);
 
