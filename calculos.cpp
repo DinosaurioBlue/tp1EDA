@@ -52,11 +52,7 @@ void avanzaTiempoAsteroides(OrbitalSim* sim){
     for(i = 0; i < sim->cantidadAsteroides; i++){    
 
         Vector3 ai = {0,0,0};
-        for(j = 0; j < (sim->cantidadCuerpos + sim->cantidadAsteroides); j++){  
-
-            if ((i + sim->cantidadCuerpos)==j){
-                continue;
-            }
+        for(j = 0; j < sim->cantidadCuerpos; j++){  
 
             //calculo de la norma del vector posicion 
             norma = (long double)(Vector3Length(Vector3Subtract(sim->cuerposCel[i+(sim->cantidadCuerpos)]->posicion, sim->cuerposCel[j]->posicion)));
@@ -67,6 +63,7 @@ void avanzaTiempoAsteroides(OrbitalSim* sim){
             }else{
                 exit(1);
             }
+            
             //calculo del vector aceleracion
             ai = Vector3Add(ai, Vector3Scale(vUnitario, (-1) * G * sim->cuerposCel[j]->masa * (1/(norma*norma))));
 
