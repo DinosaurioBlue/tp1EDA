@@ -122,8 +122,10 @@ void renderView(View *view, OrbitalSim *sim){
     EndMode3D();
 
     {   // Codigo 2D
+
         DrawText(getISODate(sim->timeSince), 10, 10, 30, WHITE);
         DrawFPS(10,700);
+    
     }
     
     EndDrawing();
