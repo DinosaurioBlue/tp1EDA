@@ -1,5 +1,5 @@
 #include "calculos.h"
-
+#include <stdlib.h>
 void avanzaTiempoCuerpos(OrbitalSim* sim){
 
     int i, j;
