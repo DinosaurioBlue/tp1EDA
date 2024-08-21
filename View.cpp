@@ -102,19 +102,18 @@ void renderView(View *view, OrbitalSim *sim){
         int i;
         for(i=0; i < sim->cantidadCuerpos; i++){
 
-            // NO ANDA BIEN AUN LA DE RINGS
-            if(i == SATURNO){
-                DrawSphereEx(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), 1, 1,sim->cuerposCel[i]->color);
-            }else{
-                DrawSphere(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), sim->cuerposCel[i]->color);
-            }
+            DrawSphere(Vector3Scale(sim->cuerposCel[i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[i]->radio), sim->cuerposCel[i]->color);
 
         }
 
         for(i=0; i < sim->cantidadAsteroides; i++){
             
-            DrawPoint3D(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
-            
+            if(Vector3Length(Vector3Subtract(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), view->camera.position)) < 5){
+                DrawSphere(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[(sim->cantidadCuerpos)+i]->radio), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
+            }else{
+                DrawPoint3D(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
+            }
+
         }
 
     }
