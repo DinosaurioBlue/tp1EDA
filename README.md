@@ -1,1 +1,2 @@
 # tp1EDA
+Debido a que el tamano de los asteroides es despreciable en comparacion a los cuerpos celestes, se tomo la decision de renderizarlos con la funcion DrawPoint, ya que asi consume menos recursos.

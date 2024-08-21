@@ -114,8 +114,7 @@ void renderView(View *view, OrbitalSim *sim){
         for(i=0; i < sim->cantidadAsteroides; i++){
             
             DrawPoint3D(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
-            //DrawSphere(Vector3Scale(sim->cuerposCel[(sim->cantidadCuerpos)+i]->posicion, 1E-11), 0.005*logf(sim->cuerposCel[(sim->cantidadCuerpos)+i]->radio), sim->cuerposCel[(sim->cantidadCuerpos)+i]->color);
-
+            
         }
 
     }
