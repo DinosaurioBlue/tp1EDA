@@ -6,6 +6,25 @@
  */
 
 // Enables M_PI #define in Windows
+
+/*@float A lo largo del tp el tipo "float" fue utilizado para representar masas, posiciones y velocidades. 
+*Utilizamos este tipo ya que solo ocupan 4 bytes, ademas de presentar un rango de ±1,5 x 10^-45 a ±3,4 x 10^38, y tiene una aproximacion de alrededor de 6 digitos */
+
+
+
+
+
+//complejidad algoritmica
+/*
+*suponiendo que la cantidad de planetas son n.
+*El calculo de las aceleraciones se hace mediante 2 for anidados. sus contadores recorren desde 0 hasta n-1,
+*por lo tanto es O(n^2).
+*
+*supongamos que la cantidad de asteroides son m. Nosotros programamos las interacciones de cada asteroide respecto a cada planeta, pero no de cdada planeta
+*respecto a cada asteroide. Los calculos de actualizacion de los asteroides depende de la cantidad de planetas y asteroides,
+*siendo un algoritmo de O(m * n).
+*/
+
 #define _USE_MATH_DEFINES
 
 #include <stdlib.h>
