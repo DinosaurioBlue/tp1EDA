@@ -11,10 +11,7 @@
 *Utilizamos este tipo ya que solo ocupan 4 bytes, ademas de presentar un rango de ±1,5 x 10^-45 a ±3,4 x 10^38, y tiene una aproximacion de alrededor de 6 digitos */
 
 
-
-
-
-//complejidad algoritmica
+// Algoritmos:
 /*
 *suponiendo que la cantidad de planetas son n.
 *El calculo de las aceleraciones se hace mediante 2 for anidados. sus contadores recorren desde 0 hasta n-1,
@@ -37,11 +34,11 @@
 #define GRAVITATIONAL_CONSTANT 6.6743E-11F
 #define ASTEROIDS_MEAN_RADIUS 4E11F
 
-#define CANTIDAD_ASTEROIDES 1000
+#define CANTIDAD_ASTEROIDES 500
 #define SEGUNDOS_INICIALES 0
 
-//#define SISTEMA_SOLAR
-#define ALPHA_CENTAURI
+#define SISTEMA_SOLAR
+//#define ALPHA_CENTAURI
 
 /**
  * @brief Gets a uniform random value in a range
